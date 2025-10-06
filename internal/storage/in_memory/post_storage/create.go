@@ -1,12 +1,13 @@
 package post_storage
 
 import (
+	"context"
 	"fmt"
 	"posts_commets_service/internal/domain/models"
 	"time"
 )
 
-func (r *PostRepo) Create(userID models.UserID, title, body string, commentBlock bool) (*models.Post, error) {
+func (r *PostRepo) Create(ctx context.Context, userID models.UserID, title, body string, commentBlock bool) (*models.Post, error) {
 	if title == "" {
 		return nil, fmt.Errorf("title is empty")
 	}

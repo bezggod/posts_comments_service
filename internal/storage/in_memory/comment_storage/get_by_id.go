@@ -1,11 +1,12 @@
 package comment_storage
 
 import (
+	"context"
 	"errors"
 	"posts_commets_service/internal/domain/models"
 )
 
-func (r *CommentRepo) GetByID(id models.CommentID) (*models.Comment, error) {
+func (r *CommentRepo) GetByID(ctx context.Context, id models.CommentID) (*models.Comment, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 

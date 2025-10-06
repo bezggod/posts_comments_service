@@ -1,11 +1,12 @@
 package comment_storage
 
 import (
+	"context"
 	"posts_commets_service/internal/domain/models"
 	"sort"
 )
 
-func (r *CommentRepo) ListRoots(postID models.PostID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
+func (r *CommentRepo) ListRoots(ctx context.Context, postID models.PostID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
 
 	r.mu.RLock()
 	var comments []*models.Comment
@@ -19,9 +20,9 @@ func (r *CommentRepo) ListRoots(postID models.PostID, limit int, lastID *models.
 	r.mu.RUnlock()
 
 	sort.Slice(comments, func(i, j int) bool {
-		return comments[i].ID < comments[j].ID
+		return comments[i].ID > comments[j].ID
 	})
-	if limit > 0 && len(comments) == limit {
+	if limit > 0 && len(comments) > limit {
 		comments = comments[:limit]
 	}
 	if len(comments) == 0 {

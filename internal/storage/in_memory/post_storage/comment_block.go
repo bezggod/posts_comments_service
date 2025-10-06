@@ -1,11 +1,12 @@
 package post_storage
 
 import (
+	"context"
 	"errors"
 	"posts_commets_service/internal/domain/models"
 )
 
-func (r *PostRepo) CommentBlock(id models.PostID, off bool) error {
+func (r *PostRepo) CommentBlock(ctx context.Context, id models.PostID, off bool) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	p := r.byID[id]

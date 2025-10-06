@@ -1,13 +1,14 @@
 package user_usecase
 
 import (
+	"context"
 	"errors"
 	"posts_commets_service/internal/domain/models"
 )
 
-func (u *UserUseCase) Create(name string) (*models.User, error) {
+func (u *UserUseCase) Create(ctx context.Context, name string) (*models.User, error) {
 	if name == "" {
 		return nil, errors.New("name is empty")
 	}
-	return u.users.Create(name)
+	return u.users.Create(ctx, name)
 }

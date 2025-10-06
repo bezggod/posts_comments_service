@@ -1,11 +1,12 @@
 package user_storage
 
 import (
+	"context"
 	"fmt"
 	"posts_commets_service/internal/domain/models"
 )
 
-func (r *UserRepo) Create(name string) (*models.User, error) {
+func (r *UserRepo) Create(ctx context.Context, name string) (*models.User, error) {
 	if name == "" {
 		return nil, fmt.Errorf("name is empty")
 	}

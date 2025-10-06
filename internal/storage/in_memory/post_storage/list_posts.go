@@ -1,11 +1,12 @@
 package post_storage
 
 import (
+	"context"
 	"posts_commets_service/internal/domain/models"
 	"sort"
 )
 
-func (r *PostRepo) ListPosts(limit int, lastID *models.PostID) ([]*models.Post, *models.PostID, error) {
+func (r *PostRepo) ListPosts(ctx context.Context, limit int, lastID *models.PostID) ([]*models.Post, *models.PostID, error) {
 	r.mu.RLock()
 	var posts []*models.Post
 	for _, p := range r.byID {
