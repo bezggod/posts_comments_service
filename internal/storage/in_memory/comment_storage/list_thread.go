@@ -1,16 +1,17 @@
 package comment_storage
 
 import (
+	"context"
 	"posts_commets_service/internal/domain/models"
 	"sort"
 )
 
-func (r *CommentRepo) ListThreads(postID models.PostID, firstCommentID models.CommentID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
+func (r *CommentRepo) ListThreads(ctx context.Context, postID models.PostID, firstCommentID models.CommentID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
 	r.mu.RLock()
 	var comments []*models.Comment
 	for _, c := range r.byID {
 		if c.PostID == postID && c.FirstCommentID == firstCommentID {
-			if lastID == nil || c.ID > *lastID {
+			if lastID == nil || c.ID < *lastID {
 				comments = append(comments, c)
 			}
 		}

@@ -1,10 +1,13 @@
 package post_usecase
 
-import "posts_commets_service/internal/domain/models"
+import (
+	"context"
+	"posts_commets_service/internal/domain/models"
+)
 
-func (u *PostUseCase) ListPosts(limit int, lastID *models.PostID) ([]*models.Post, *models.PostID, error) {
+func (u *PostUseCase) ListPosts(ctx context.Context, limit int, lastID *models.PostID) ([]*models.Post, *models.PostID, error) {
 	if limit < 0 {
 		limit = 0
 	}
-	return u.posts.ListPosts(limit, lastID)
+	return u.posts.ListPosts(ctx, limit, lastID)
 }

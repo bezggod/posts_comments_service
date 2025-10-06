@@ -1,7 +1,10 @@
 package post_usecase
 
-import "posts_commets_service/internal/domain/models"
+import (
+	"context"
+	"posts_commets_service/internal/domain/models"
+)
 
-func (u *PostUseCase) CommentBlock(id models.PostID, off bool) error {
-	return u.posts.CommentBlock(id, off)
+func (u *PostUseCase) CommentBlock(ctx context.Context, id models.PostID, off bool) error {
+	return u.posts.CommentBlock(ctx, id, off)
 }

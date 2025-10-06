@@ -1,12 +1,13 @@
 package comment_storage
 
 import (
+	"context"
 	"fmt"
 	"posts_commets_service/internal/domain/models"
 	"time"
 )
 
-func (r *CommentRepo) CreateReplyComment(postID models.PostID, userID models.UserID, parentCommentID models.CommentID, text string) (*models.Comment, error) {
+func (r *CommentRepo) CreateReplyComment(ctx context.Context, postID models.PostID, userID models.UserID, parentCommentID models.CommentID, text string) (*models.Comment, error) {
 	if len(text) > maxLength {
 		return nil, fmt.Errorf("comment text is very long")
 	}

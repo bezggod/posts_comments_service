@@ -1,10 +1,13 @@
 package comment_usecase
 
-import "posts_commets_service/internal/domain/models"
+import (
+	"context"
+	"posts_commets_service/internal/domain/models"
+)
 
-func (u *CommentUsecase) ListRoots(postID models.PostID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
+func (u *CommentUseCase) ListRoots(ctx context.Context, postID models.PostID, limit int, lastID *models.CommentID) ([]*models.Comment, *models.CommentID, error) {
 	if limit < 0 {
 		limit = 0
 	}
-	return u.comments.ListRoots(postID, limit, lastID)
+	return u.comments.ListRoots(ctx, postID, limit, lastID)
 }
