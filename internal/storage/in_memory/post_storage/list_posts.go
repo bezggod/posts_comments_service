@@ -20,11 +20,14 @@ func (r *PostRepo) ListPosts(ctx context.Context, limit int, lastID *models.Post
 		return posts[i].ID > posts[j].ID
 	})
 
-	if limit > 0 && len(posts) > limit {
+	if limit < 0 {
+		return nil, nil, nil
+	}
+	if len(posts) > limit {
 		posts = posts[:limit]
 	}
 	if len(posts) == 0 {
-		return posts, nil, nil
+		return nil, nil, nil
 	}
 	next := posts[len(posts)-1].ID
 	return posts, &next, nil

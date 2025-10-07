@@ -1,0 +1,9 @@
+.git
+.idea
+.vscode
+tmp
+build
+node_modules
+.env
+coverage*
+*.test

@@ -9,7 +9,6 @@ import (
 
 func main() {
 	sp := service_provider.NewServiceProvider(os.Getenv("STORAGE_MODE"))
-	
 
 	addr := os.Getenv("ADDR")
 	if addr == "" {

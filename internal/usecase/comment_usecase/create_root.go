@@ -2,13 +2,14 @@ package comment_usecase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"posts_commets_service/internal/domain/models"
 )
 
 func (u *CommentUseCase) CreateRoot(ctx context.Context, postID models.PostID, userID models.UserID, text string) (*models.Comment, error) {
-	if text == "" {
-		return nil, fmt.Errorf("text is empty")
+	if text == "" || len(text) > 2000 {
+		return nil, errors.New("text is empty or invalid comment len")
 	}
 	post, err := u.posts.GetByID(ctx, postID)
 	if err != nil {

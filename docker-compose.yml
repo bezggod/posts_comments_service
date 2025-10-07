@@ -18,6 +18,10 @@ services:
 
   app:
     build: .
+    environment:
+      ADDR: ":8080"
+      STORAGE_MODE: "postgres"
+      POSTGRES_PG_DSN: "postgres://bezgo:12345@db:5432/p_c_service?sslmode=disable"
     env_file: docker.env
     ports:
       - "8080:8080"

@@ -34,7 +34,7 @@ func (r *PostRepo) ListPosts(ctx context.Context, limit int, lastID *models.Post
 	}
 
 	if len(posts) == 0 {
-		return posts, nil, nil
+		return nil, nil, nil
 	}
 	next := posts[len(posts)-1].ID
 	return posts, &next, nil
