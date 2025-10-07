@@ -15,7 +15,7 @@ func (c *Controller) GetByID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "id is required", http.StatusBadRequest)
 	}
 	id, err := strconv.ParseInt(idQuery, 10, 64)
-	if err != nil {
+	if err != nil || id <= 0 {
 		http.Error(w, "invalid id", http.StatusBadRequest)
 	}
 

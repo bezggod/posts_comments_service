@@ -1,0 +1,26 @@
+type Comment {
+    id: Int!
+    postID: Int!
+    userID: Int!
+    text: String!
+    createdAt: Time!
+    parentCommentID: Int
+    firstCommentID: Int
+    replies: [Comment!]
+}
+
+input InputComment {
+    postID: Int!
+    userID: Int!
+    text: String!
+    parentCommentID: Int
+}
+
+extend type Mutation {
+    createComment(input: InputComment!): Comment!
+}
+extend type Query {
+
+    listRoots(postID: Int!, limit: Int, lastID: Int): [Comment!]!
+    listThreads(postID: Int!, firstCommentID: Int!, limit: Int, lastID: Int): [Comment!]!
+}

@@ -1,0 +1,9 @@
+scalar Time
+
+type Query {
+    _ping: String!
+}
+
+type Mutation {
+    _empty: String
+}

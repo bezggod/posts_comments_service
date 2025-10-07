@@ -1,6 +1,14 @@
 package service_provider
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/99designs/gqlgen/graphql/playground"
+	"posts_commets_service/internal/graphql"
+	generated "posts_commets_service/internal/graphql"
+
+	gqlhandler "github.com/99designs/gqlgen/graphql/handler"
+)
 
 func (s *ServiceProvider) GetHTTPServer() *http.ServeMux {
 	mux := http.NewServeMux()
@@ -22,6 +30,24 @@ func (s *ServiceProvider) GetHTTPServer() *http.ServeMux {
 	mux.HandleFunc("GET /comments/roots", commentCtrl.ListRoots)
 	mux.HandleFunc("GET /comments/threads", commentCtrl.ListThread)
 
-	return mux
+	mux.Handle("/graphql", s.getGraphQLHandler())
+	mux.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 
+	return mux
+}
+
+func (s *ServiceProvider) getGraphQLHandler() http.Handler {
+	res := &graphql.Resolver{
+		UserUC:    s.GetUserUseCase(),
+		PostUC:    s.GetPostUseCase(),
+		CommentUC: s.GetCommentUseCase(),
+	}
+
+	srv := gqlhandler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{Resolvers: res},
+		),
+	)
+
+	return srv
 }

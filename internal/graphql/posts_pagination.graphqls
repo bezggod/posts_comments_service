@@ -1,0 +1,4 @@
+type PostsPage {
+    posts: [Post!]!
+    nextID: Int
+}
