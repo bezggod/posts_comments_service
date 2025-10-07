@@ -1,0 +1,16 @@
+type User {
+    id: ID!
+    name: String!
+    createdAt: Time
+}
+
+input InputUser {
+    name: String!
+}
+
+extend type Mutation {
+    createUser(input: InputUser!): User!
+}
+extend type Query {
+    getUser(id: Int!): User
+}

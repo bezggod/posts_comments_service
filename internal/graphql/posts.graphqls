@@ -1,0 +1,24 @@
+type Post {
+    id: Int!
+    userID: Int!
+    title: String!
+    body: String!
+    commentBlock: Boolean!
+    createdAt: Time!
+}
+
+input InputPost {
+    userID: Int!
+    title: String!
+    body: String!
+    commentBlock: Boolean
+}
+
+extend type Mutation {
+    createPost(input: InputPost!): Post!
+}
+
+extend type Query {
+    getPost(id: Int!): Post
+    listPosts(limit: Int, lastID: Int): PostsPage!
+}
