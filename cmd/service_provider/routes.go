@@ -50,4 +50,5 @@ func (s *ServiceProvider) getGraphQLHandler() http.Handler {
 	)
 
 	return srv
+
 }
