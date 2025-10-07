@@ -12,6 +12,7 @@ type Post struct {
 	Body         string
 	CommentBlock bool
 	CreatedAt    time.Time
+	Text         string
 }
 
 func NewPost(userID UserID, title, body string, commentBlock bool, createdAt time.Time) *Post {
@@ -20,6 +21,6 @@ func NewPost(userID UserID, title, body string, commentBlock bool, createdAt tim
 		Title:        title,
 		Body:         body,
 		CommentBlock: commentBlock,
-		CreatedAt:    time.Now(),
+		CreatedAt:    time.Time{},
 	}
 }
