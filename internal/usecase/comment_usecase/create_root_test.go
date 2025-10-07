@@ -69,6 +69,16 @@ func TestCommentUseCase_CreateRoot(t *testing.T) {
 			},
 		},
 		{
+			name: "invalid comment",
+			args: args{
+				postID: 1,
+				userID: 2,
+				text:   "",
+			},
+			wantErr: true,
+			before:  nil,
+		},
+		{
 			name: "empty text",
 			args: args{
 				postID: 1,

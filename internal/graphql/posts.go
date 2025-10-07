@@ -49,8 +49,14 @@ func (r *queryResolver) ListPosts(ctx context.Context, limit *int, lastID *int) 
 	}
 
 	return &models.PostsPage{
-		Posts:  posts,
-		NextID: toIntPtr(next),
+		Posts: posts,
+		NextID: func() *int {
+			if next == nil {
+				return nil
+			}
+			v := int(*next)
+			return &v
+		}(),
 	}, nil
 }
 

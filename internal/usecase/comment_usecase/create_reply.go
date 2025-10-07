@@ -7,8 +7,8 @@ import (
 )
 
 func (u *CommentUseCase) CreateReplyComment(ctx context.Context, postID models.PostID, userID models.UserID, parentCommentID models.CommentID, text string) (*models.Comment, error) {
-	if text == "" {
-		return nil, errors.New("text is empty")
+	if text == "" || len(text) > 2000 {
+		return nil, errors.New("text is empty or invalid comment len")
 	}
 	post, err := u.posts.GetByID(ctx, postID)
 	if err != nil {

@@ -9,20 +9,27 @@ import (
 
 func (c *Controller) ListPosts(w http.ResponseWriter, r *http.Request) {
 	limitStr := r.URL.Query().Get("limit")
-	lastStr := r.URL.Query().Get("last")
+	lastStr := r.URL.Query().Get("last_id")
 
-	limit, _ := strconv.Atoi(limitStr)
+	limit, err := strconv.Atoi(limitStr)
+	if limitStr != "" && err != nil {
+		http.Error(w, "limit must be a number", http.StatusBadRequest)
+	}
 
 	var lastID *models.PostID
 	if lastStr != "" {
-		id, _ := strconv.ParseInt(lastStr, 10, 64)
+		id, err := strconv.ParseInt(lastStr, 10, 64)
+		if err != nil {
+			http.Error(w, "last_id must be a number", http.StatusBadRequest)
+			return
+		}
 		tmp := models.PostID(id)
 		lastID = &tmp
 	}
 
 	posts, next, err := c.uc.ListPosts(r.Context(), limit, lastID)
 	if err != nil {
-		http.Error(w, "invalid id", http.StatusBadRequest)
+		http.Error(w, "list error", http.StatusBadRequest)
 		return
 	}
 	resp := map[string]interface{}{

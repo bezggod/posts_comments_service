@@ -73,6 +73,17 @@ func TestCommentUseCase_CreateReplyComment(t *testing.T) {
 			},
 		},
 		{
+			name: "invalid len",
+			args: args{
+				postID:          1,
+				userID:          2,
+				parentCommentID: 3,
+				text:            "",
+			},
+			wantErr: true,
+			before:  nil,
+		},
+		{
 			name: "empty text",
 			args: args{
 				postID:          1,
