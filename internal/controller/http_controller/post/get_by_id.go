@@ -8,6 +8,8 @@ import (
 )
 
 func (c *Controller) GetByID(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
 	idQuery := r.URL.Query().Get("id")
 	if idQuery == "" {
 		http.Error(w, "id is required", http.StatusBadRequest)
