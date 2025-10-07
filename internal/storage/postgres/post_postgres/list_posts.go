@@ -12,10 +12,12 @@ func (r *PostRepo) ListPosts(ctx context.Context, limit int, lastID *models.Post
 
 	if lastID != nil {
 		rows, err = r.cluster.Conn.Query(ctx, `select id, user_id, title,body,comment_block, created_at 
-		FROM posts WHERE id < $1 ORDER BY id DESC LIMIT $2 OFFSET $3`, *lastID, limit)
+		FROM posts 
+		WHERE id < $1 ORDER BY id DESC LIMIT $2`, *lastID, limit)
 	} else {
 		rows, err = r.cluster.Conn.Query(ctx, `select id, user_id, title,body,comment_block, created_at 
-		FROM posts ORDER BY id DESC LIMIT $1`, limit)
+		FROM posts 
+		ORDER BY id DESC LIMIT $1`, limit)
 	}
 	if err != nil {
 		return nil, nil, err
