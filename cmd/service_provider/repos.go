@@ -3,13 +3,13 @@ package service_provider
 import (
 	"context"
 	"os"
-	"posts_commets_service/internal/domain/interfaces"
-	"posts_commets_service/internal/storage/in_memory/comment_storage"
-	"posts_commets_service/internal/storage/in_memory/post_storage"
-	"posts_commets_service/internal/storage/in_memory/user_storage"
-	"posts_commets_service/internal/storage/postgres/comment_postgres"
-	"posts_commets_service/internal/storage/postgres/post_postgres"
-	"posts_commets_service/internal/storage/postgres/user_postgres"
+	"posts_comments_service/internal/adapter/in_memory/comment_storage"
+	"posts_comments_service/internal/adapter/in_memory/post_storage"
+	"posts_comments_service/internal/adapter/in_memory/user_storage"
+	"posts_comments_service/internal/adapter/postgres/comment_postgres"
+	"posts_comments_service/internal/adapter/postgres/post_postgres"
+	"posts_comments_service/internal/adapter/postgres/user_postgres"
+	"posts_comments_service/internal/domain/interfaces"
 )
 
 func (s *ServiceProvider) getUserRepo() interfaces.UserRepo {

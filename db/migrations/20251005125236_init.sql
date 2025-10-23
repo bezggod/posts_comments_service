@@ -26,11 +26,18 @@ CREATE TABLE comments
     first_comment_id bigint null,
     created_at timestamptz default now()
 );
+
+CREATE INDEX IF NOT EXISTS idx_posts_user_id ON posts(user_id);
+CREATE INDEX IF NOT EXISTS idx_posts_created_at ON posts(created_at);
+
+CREATE INDEX IF NOT EXISTS idx_comments_post_id ON comments(post_id);
+CREATE INDEX IF NOT EXISTS idx_comments_user_id ON comments(user_id);
+CREATE INDEX IF NOT EXISTS idx_comments_parent_comment_id ON comments(parent_comment_id);
+CREATE INDEX IF NOT EXISTS idx_comments_first_comment_id ON comments(first_comment_id);
+
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-drop table if exists users;
-drop table if exists posts;
-drop table if exists comments;
+DROP TABLE IF EXISTS comments, posts, users CASCADE;
 -- +goose StatementEnd

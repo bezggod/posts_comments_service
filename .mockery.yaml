@@ -45,7 +45,7 @@ dir: "{{.InterfaceDir}}/mocks"
 
 
 packages:
-  posts_commetns_service/internal/domain/interfaces:
+  posts_comments_service/internal/domain/interfaces:
     config:
       exported: true
       recursive: false

@@ -3,7 +3,7 @@ package config
 import (
 	"context"
 	"fmt"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -22,17 +22,28 @@ func DSN() string {
 }
 
 type Cluster struct {
-	Conn *pgx.Conn
+	Pool *pgxpool.Pool
 }
 
 func NewCluster(ctx context.Context) (*Cluster, error) {
 	dsn := DSN()
 
 	fmt.Printf("dsn: %s\n", dsn)
-	conn, err := pgx.Connect(ctx, dsn)
+	cfg, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
-		return nil, fmt.Errorf("pgx.Connect: %w", err)
+		return nil, fmt.Errorf("parse config: %w", err)
 	}
 
-	return &Cluster{Conn: conn}, nil
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
+	if err != nil {
+		return nil, fmt.Errorf("pgxpool.New: %w", err)
+	}
+
+	return &Cluster{Pool: pool}, nil
+}
+
+func (c *Cluster) Close() {
+	if c.Pool != nil {
+		c.Pool.Close()
+	}
 }

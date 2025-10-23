@@ -21,6 +21,6 @@ func NewPost(userID UserID, title, body string, commentBlock bool, createdAt tim
 		Title:        title,
 		Body:         body,
 		CommentBlock: commentBlock,
-		CreatedAt:    time.Time{},
+		CreatedAt:    time.Now(),
 	}
 }

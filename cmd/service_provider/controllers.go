@@ -1,9 +1,9 @@
 package service_provider
 
 import (
-	"posts_commets_service/internal/controller/http_controller/comment"
-	"posts_commets_service/internal/controller/http_controller/post"
-	"posts_commets_service/internal/controller/http_controller/user"
+	"posts_comments_service/internal/controller/http_controller/comment"
+	"posts_comments_service/internal/controller/http_controller/post"
+	"posts_comments_service/internal/controller/http_controller/user"
 )
 
 func (s *ServiceProvider) GetUserController() *user.Controller {

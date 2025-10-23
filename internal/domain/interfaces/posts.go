@@ -2,7 +2,7 @@ package interfaces
 
 import (
 	"context"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 )
 
 type PostRepo interface {

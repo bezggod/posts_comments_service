@@ -3,7 +3,7 @@
 package models
 
 import (
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 )
 
 type InputComment struct {

@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"posts_commets_service/cmd/service_provider"
+	"posts_comments_service/cmd/service_provider"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	if addr == "" {
 		addr = ":8080"
 	}
-	log.Println("API server listening on", addr, "storage:", os.Getenv("STORAGE_MODE"))
+	log.Println("API server listening on", addr, "adapter:", os.Getenv("STORAGE_MODE"))
 	if err := http.ListenAndServe(addr, sp.GetHTTPServer()); err != nil {
 		log.Fatal(err)
 	}

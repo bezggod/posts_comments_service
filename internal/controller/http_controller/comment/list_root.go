@@ -3,10 +3,12 @@ package comment
 import (
 	"encoding/json"
 	"net/http"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/controller"
+	"posts_comments_service/internal/domain/models"
 	"strconv"
 )
 
+// ListRoots обрабатывает HTTP запрос на получение списка корневых комментариев к посту
 func (c *Controller) ListRoots(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	q := r.URL.Query()
@@ -14,7 +16,7 @@ func (c *Controller) ListRoots(w http.ResponseWriter, r *http.Request) {
 
 	postID, err := strconv.ParseInt(q.Get("post_id"), 10, 64)
 	if err != nil || postID == 0 {
-		http.Error(w, "bad request, post_id", http.StatusBadRequest)
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
 
@@ -28,7 +30,8 @@ func (c *Controller) ListRoots(w http.ResponseWriter, r *http.Request) {
 		var id int64
 		id, err = strconv.ParseInt(lastStr, 10, 64)
 		if err != nil {
-			http.Error(w, "bad request, last_id", http.StatusBadRequest)
+			controller.WriteError(w, controller.ErrInvalidInput)
+			return
 		}
 		tmp := models.CommentID(id)
 		last = &tmp
@@ -36,7 +39,7 @@ func (c *Controller) ListRoots(w http.ResponseWriter, r *http.Request) {
 
 	comments, next, err := c.uc.ListRoots(ctx, models.PostID(postID), limit, last)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		controller.WriteError(w, err)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

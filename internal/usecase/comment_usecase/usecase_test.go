@@ -1,20 +1,25 @@
 package comment_usecase
 
 import (
-	ctmocks "posts_commets_service/internal/usecase/comment_usecase/mocks"
-	ptmocks "posts_commets_service/internal/usecase/post_usecase/mocks"
+	"github.com/stretchr/testify/assert"
+	"posts_comments_service/internal/domain/interfaces/mocks"
 	"testing"
 )
 
 type mockService struct {
-	postRepo    *ptmocks.PostRepo
-	commentRepo *ctmocks.CommentRepo
+	postRepo    *mocks.MockPostRepo
+	commentRepo *mocks.MockCommentRepo
+}
+
+func TestCommentUsecase(t *testing.T) {
+	u := NewCommentUseCase(nil, nil)
+	assert.NotNil(t, u)
 }
 
 func makeService(t *testing.T) (*CommentUseCase, mockService) {
 	m := mockService{
-		postRepo:    ptmocks.NewPostRepo(t),
-		commentRepo: ctmocks.NewCommentRepo(t),
+		postRepo:    mocks.NewMockPostRepo(t),
+		commentRepo: mocks.NewMockCommentRepo(t),
 	}
 
 	u := &CommentUseCase{

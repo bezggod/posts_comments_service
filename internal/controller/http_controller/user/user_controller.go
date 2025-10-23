@@ -1,6 +1,6 @@
 package user
 
-import "posts_commets_service/internal/usecase/user_usecase"
+import "posts_comments_service/internal/usecase/user_usecase"
 
 type Controller struct {
 	uc *user_usecase.UserUseCase

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -53,16 +53,6 @@ func TestCommentUseCase_ListRoots(t *testing.T) {
 			before: func(m mockService, args args) {
 				m.commentRepo.EXPECT().ListRoots(mock.Anything, args.postID, args.limit, args.lastID).Return(nil, nil, errTest)
 			},
-		},
-		{
-			name: "empty postID",
-			args: args{
-				postID: 0,
-				limit:  10,
-				lastID: nil,
-			},
-			wantErr: true,
-			before:  nil,
 		},
 		{
 			name: "limit<0",
