@@ -13,11 +13,17 @@ func (r *CommentRepo) ListRoots(ctx context.Context, postID models.PostID, limit
 	var err error
 
 	if lastID == nil {
-		rows, err = r.cluster.Pool.Query(ctx, `SELECT id, post_id,user_id, text, created_at
-FROM comments where post_id = $1 AND parent_id IS NULL ORDER BY id DESC LIMIT $2`, *lastID, limit)
+		rows, err = r.cluster.Pool.Query(ctx, `
+			SELECT id, post_id,user_id, text, created_at
+			FROM comments 
+			WHERE post_id = $1 AND parent_id IS NULL 
+			ORDER BY id DESC LIMIT $2`, postID, limit)
 	} else {
-		rows, err = r.cluster.Pool.Query(ctx, `SELECT id, post_id,user_id, text, created_at
-FROM comments where post_id = $1 AND parent_id IS NULL ORDER BY id DESC LIMIT $2`, postID, limit)
+		rows, err = r.cluster.Pool.Query(ctx, `
+			SELECT id, post_id,user_id, text, created_at
+			FROM comments 
+			WHERE post_id = $1 AND parent_id IS NULL 
+			ORDER BY id DESC LIMIT $2`, *lastID, limit)
 	}
 	if err != nil {
 		return nil, nil, err
@@ -27,8 +33,12 @@ FROM comments where post_id = $1 AND parent_id IS NULL ORDER BY id DESC LIMIT $2
 	var comments []*models.Comment
 	for rows.Next() {
 		var comment models.Comment
-		err := rows.Scan(&comment.ID, &comment.PostID, &comment.UserID, &comment.Text, &comment.CreatedAt)
-		if err != nil {
+		if err := rows.Scan(
+			&comment.ID,
+			&comment.PostID,
+			&comment.UserID,
+			&comment.Text,
+			&comment.CreatedAt); err != nil {
 			return nil, nil, err
 		}
 		comments = append(comments, &comment)

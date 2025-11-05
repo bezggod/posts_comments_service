@@ -15,7 +15,7 @@ func TestUserUseCase_Create(t *testing.T) {
 	errTest := errors.New("test error")
 
 	type args struct {
-		req CreateUserReq
+		req UseCase
 	}
 
 	tests := []struct {
@@ -28,7 +28,7 @@ func TestUserUseCase_Create(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				req: CreateUserReq{
+				req: UseCase{
 					Name: "TEST",
 				},
 			},
@@ -45,7 +45,7 @@ func TestUserUseCase_Create(t *testing.T) {
 		{
 			name: "error on Create",
 			args: args{
-				req: CreateUserReq{
+				req: UseCase{
 					Name: "TEST",
 				},
 			},

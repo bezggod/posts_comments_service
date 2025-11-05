@@ -29,7 +29,10 @@ func (r *CommentRepo) CreateRoot(ctx context.Context, postID models.PostID, user
 		}
 
 		// Обновляем first_comment_id
-		if _, err := tx.Exec(ctx, `UPDATE comments SET first_comment_id = id WHERE id = $1`, comment.ID); err != nil {
+		if _, err := tx.Exec(ctx, `
+			UPDATE comments 
+			SET first_comment_id = id 
+			WHERE id = $1`, comment.ID); err != nil {
 			return fmt.Errorf("failed to update first_comment_id: %w", err)
 		}
 

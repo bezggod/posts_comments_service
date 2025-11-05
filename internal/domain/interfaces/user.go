@@ -6,6 +6,6 @@ import (
 )
 
 type UserRepo interface {
-	Create(ctx context.Context, name string) (*models.User, error)
+	Create(ctx context.Context, user *models.User) (*models.User, error)
 	GetByID(ctx context.Context, id models.UserID) (*models.User, error)
 }
