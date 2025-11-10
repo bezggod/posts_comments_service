@@ -1,6 +1,6 @@
 package graphql
 
-import "posts_commets_service/internal/domain/models"
+import "posts_comments_service/internal/domain/models"
 
 func boolOrFalse(p *bool) bool {
 	if p == nil {

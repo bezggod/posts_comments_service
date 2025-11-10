@@ -1,7 +1,7 @@
 package user_usecase
 
 import (
-	"posts_commets_service/internal/domain/interfaces"
+	"posts_comments_service/internal/domain/interfaces"
 )
 
 type UserUseCase struct {

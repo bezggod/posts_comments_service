@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 

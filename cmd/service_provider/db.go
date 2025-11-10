@@ -3,7 +3,7 @@ package service_provider
 import (
 	"context"
 	"log"
-	"posts_commets_service/internal/config"
+	"posts_comments_service/internal/config"
 )
 
 func (s *ServiceProvider) getDbCluster(ctx context.Context) *config.Cluster {

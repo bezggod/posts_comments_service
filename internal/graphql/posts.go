@@ -6,8 +6,8 @@ package graphql
 
 import (
 	"context"
-	domain "posts_commets_service/internal/domain/models"
-	"posts_commets_service/internal/models"
+	domain "posts_comments_service/internal/domain/models"
+	"posts_comments_service/internal/models"
 )
 
 // CreatePost is the resolver for the createPost field.

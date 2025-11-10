@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -71,28 +71,6 @@ func TestCommentUseCase_CreateReplyComment(t *testing.T) {
 			before: func(m mockService, args args) {
 				m.postRepo.EXPECT().GetByID(mock.Anything, args.postID).Return(&models.Post{CommentBlock: true}, nil)
 			},
-		},
-		{
-			name: "invalid len",
-			args: args{
-				postID:          1,
-				userID:          2,
-				parentCommentID: 3,
-				text:            "",
-			},
-			wantErr: true,
-			before:  nil,
-		},
-		{
-			name: "empty text",
-			args: args{
-				postID:          1,
-				userID:          2,
-				parentCommentID: 3,
-				text:            "",
-			},
-			wantErr: true,
-			before:  nil,
 		},
 	}
 

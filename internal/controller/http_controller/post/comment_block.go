@@ -3,7 +3,8 @@ package post
 import (
 	"encoding/json"
 	"net/http"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/controller"
+	"posts_comments_service/internal/domain/models"
 )
 
 type reqCommentBlock struct {
@@ -14,12 +15,18 @@ type reqCommentBlock struct {
 func (c *Controller) CommentBlock(w http.ResponseWriter, r *http.Request) {
 	var req reqCommentBlock
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "bad request", http.StatusBadRequest)
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
+	if req.PostID <= 0 {
+		controller.WriteError(w, controller.ErrInvalidInput)
+		return
+	}
+
 	err := c.uc.CommentBlock(r.Context(), models.PostID(req.PostID), req.Off)
 	if err != nil {
-		http.Error(w, "bad request", http.StatusBadRequest)
+		controller.WriteError(w, err)
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)

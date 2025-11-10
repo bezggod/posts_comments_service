@@ -3,7 +3,8 @@ package post
 import (
 	"encoding/json"
 	"net/http"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/controller"
+	"posts_comments_service/internal/domain/models"
 )
 
 type reqCreatePost struct {
@@ -13,21 +14,22 @@ type reqCreatePost struct {
 	CommentBlock bool   `json:"comment_block"`
 }
 
+// Create обрабатывает HTTP запрос на создание нового поста
 func (c *Controller) Create(w http.ResponseWriter, r *http.Request) {
 	var req reqCreatePost
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "bad request", http.StatusBadRequest)
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
-	if req.Title == "" || req.Body == "" {
-		http.Error(w, "title and body is required", http.StatusBadRequest)
+	if err := controller.ValidatePost(req.Title, req.Body); err != nil {
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
 
 	ctx := r.Context()
 	post, err := c.uc.Create(ctx, models.UserID(req.UserID), req.Title, req.Body, req.CommentBlock)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		controller.WriteError(w, err)
 		return
 	}
 

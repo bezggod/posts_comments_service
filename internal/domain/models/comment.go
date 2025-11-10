@@ -18,7 +18,7 @@ func NewComment(postID PostID, userID UserID, text string) *Comment {
 		PostID:    postID,
 		UserID:    userID,
 		Text:      text,
-		CreatedAt: time.Time{},
+		CreatedAt: time.Now(),
 	}
 }
 func NewCommentReply(postID PostID, userID UserID, parentID CommentID, rootID CommentID, text string) *Comment {

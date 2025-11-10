@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ func TestUserUseCase_Create(t *testing.T) {
 	errTest := errors.New("test error")
 
 	type args struct {
-		req CreateUserReq
+		req UseCase
 	}
 
 	tests := []struct {
@@ -28,7 +28,7 @@ func TestUserUseCase_Create(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				req: CreateUserReq{
+				req: UseCase{
 					Name: "TEST",
 				},
 			},
@@ -45,7 +45,7 @@ func TestUserUseCase_Create(t *testing.T) {
 		{
 			name: "error on Create",
 			args: args{
-				req: CreateUserReq{
+				req: UseCase{
 					Name: "TEST",
 				},
 			},
@@ -54,16 +54,6 @@ func TestUserUseCase_Create(t *testing.T) {
 
 				m.userRepo.EXPECT().Create(mock.Anything, args.req.Name).Return(nil, errTest)
 			},
-		},
-		{
-			name: "empty name",
-			args: args{
-				req: CreateUserReq{
-					Name: "",
-				},
-			},
-			wantErr: true,
-			before:  func(m mockService, args args) {},
 		},
 	}
 	for _, tc := range tests {

@@ -7,3 +7,10 @@ migrate-create:
 run-pg:
 		POSTGRES_PG_DSN="postgres://bezgo:12345@localhost:5432/p_c_service?sslmode=disable" \
     	STORAGE_MODE=postgres ADDR=:8080 go run ./cmd
+
+docker.run.db:
+	docker compose up -d db
+
+docker.run:
+	docker compose up -d --build
+	docker compose logs -f app

@@ -3,27 +3,29 @@ package user
 import (
 	"encoding/json"
 	"net/http"
+	"posts_comments_service/internal/controller"
 )
 
 type reqCreateUser struct {
 	Name string `json:"name"`
 }
 
+// Create обрабатывает HTTP запрос на создание нового пользователя
 func (c *Controller) Create(w http.ResponseWriter, r *http.Request) {
 	var req reqCreateUser
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "bad request", http.StatusBadRequest)
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
-	if req.Name == "" {
-		http.Error(w, "name is required", http.StatusBadRequest)
+	if err := controller.ValidateUser(req.Name); err != nil {
+		controller.WriteError(w, controller.ErrInvalidInput)
 		return
 	}
 
 	ctx := r.Context()
 	user, err := c.uc.Create(ctx, req.Name)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		controller.WriteError(w, err)
 		return
 	}
 

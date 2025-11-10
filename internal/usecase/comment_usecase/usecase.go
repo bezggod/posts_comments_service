@@ -1,6 +1,6 @@
 package comment_usecase
 
-import "posts_commets_service/internal/domain/interfaces"
+import "posts_comments_service/internal/domain/interfaces"
 
 type CommentUseCase struct {
 	posts    interfaces.PostRepo

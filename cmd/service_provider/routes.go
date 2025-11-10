@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/playground"
-	"posts_commets_service/internal/graphql"
-	generated "posts_commets_service/internal/graphql"
+	"posts_comments_service/internal/graphql"
+	generated "posts_comments_service/internal/graphql"
 
 	gqlhandler "github.com/99designs/gqlgen/graphql/handler"
 )
@@ -22,13 +22,13 @@ func (s *ServiceProvider) GetHTTPServer() *http.ServeMux {
 	mux.HandleFunc("POST /posts", postCtrl.Create)
 	mux.HandleFunc("GET /posts/{id}", postCtrl.GetByID)
 	mux.HandleFunc("GET /posts", postCtrl.ListPosts)
-	mux.HandleFunc("POST /posts/comment_block", postCtrl.CommentBlock)
+	mux.HandleFunc("PUT /posts/comment_block", postCtrl.CommentBlock)
 
 	mux.HandleFunc("POST /comments/reply", commentCtrl.CreateReply)
 	mux.HandleFunc("POST /comments/root", commentCtrl.CreateRoot)
 	mux.HandleFunc("GET /comments/{id}", commentCtrl.GetByID)
 	mux.HandleFunc("GET /comments/roots", commentCtrl.ListRoots)
-	mux.HandleFunc("GET /comments/threads", commentCtrl.ListThread)
+	mux.HandleFunc("GET /comments/threads", commentCtrl.ListThreads)
 
 	mux.Handle("/graphql", s.getGraphQLHandler())
 	mux.Handle("/", playground.Handler("GraphQL playground", "/graphql"))

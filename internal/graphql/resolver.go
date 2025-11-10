@@ -1,9 +1,9 @@
 package graphql
 
 import (
-	"posts_commets_service/internal/usecase/comment_usecase"
-	"posts_commets_service/internal/usecase/post_usecase"
-	"posts_commets_service/internal/usecase/user_usecase"
+	"posts_comments_service/internal/usecase/comment_usecase"
+	"posts_comments_service/internal/usecase/post_usecase"
+	"posts_comments_service/internal/usecase/user_usecase"
 )
 
 // This file will not be regenerated automatically.

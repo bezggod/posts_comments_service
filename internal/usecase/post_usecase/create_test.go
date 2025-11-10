@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -63,28 +63,6 @@ func TestPostUseCase_Create(t *testing.T) {
 			before: func(m mockService, args args) {
 				m.postRepo.EXPECT().Create(mock.Anything, args.userID, args.title, args.body, args.commentBlock).Return(nil, errTest)
 			},
-		},
-		{
-			name: "empty title",
-			args: args{
-				userID:       1,
-				title:        "",
-				body:         "test body",
-				commentBlock: false,
-			},
-			wantErr: true,
-			before:  nil,
-		},
-		{
-			name: "empty body",
-			args: args{
-				userID:       1,
-				title:        "test title",
-				body:         "",
-				commentBlock: false,
-			},
-			wantErr: true,
-			before:  nil,
 		},
 	}
 	for _, tc := range tests {

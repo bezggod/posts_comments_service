@@ -2,17 +2,22 @@ package user_usecase
 
 import (
 	"context"
-	"errors"
-	"posts_commets_service/internal/domain/models"
+	"fmt"
+	"posts_comments_service/internal/domain/models"
 )
 
-type CreateUserReq struct {
+type UseCase struct {
 	Name string
 }
 
+// Create создает нового пользователя
 func (u *UserUseCase) Create(ctx context.Context, name string) (*models.User, error) {
-	if name == "" {
-		return nil, errors.New("name is empty")
+	user := &models.User{
+		Name: name,
 	}
-	return u.users.Create(ctx, name)
+	createdUser, err := u.users.Create(ctx, user)
+	if err != nil {
+		return nil, fmt.Errorf("UserUseCase.Create: %w", err)
+	}
+	return createdUser, nil
 }

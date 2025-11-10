@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -60,8 +60,22 @@ func TestPostUseCase_ListPosts(t *testing.T) {
 			},
 			want: []*models.Post{},
 			before: func(m mockService, args args) {
-				m.postRepo.EXPECT().ListPosts(mock.Anything, 0, args.lastID).Return([]*models.Post{}, nil, nil)
+				m.postRepo.EXPECT().ListPosts(mock.Anything, 20, args.lastID).Return([]*models.Post{}, nil, nil)
 			},
+		},
+		{
+			name: "limit > maxLimit",
+			args: args{
+				limit: 9999,
+			},
+			before: func(m mockService, args args) {
+				maxl := maxLimit
+				m.postRepo.EXPECT().
+					ListPosts(mock.Anything, maxl, args.lastID).
+					Return([]*models.Post{}, nil, nil)
+			},
+			want:    []*models.Post{},
+			wantErr: false,
 		},
 	}
 

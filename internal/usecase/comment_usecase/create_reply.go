@@ -3,13 +3,11 @@ package comment_usecase
 import (
 	"context"
 	"errors"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 )
 
+// CreateReplyComment создает ответ на комментарий
 func (u *CommentUseCase) CreateReplyComment(ctx context.Context, postID models.PostID, userID models.UserID, parentCommentID models.CommentID, text string) (*models.Comment, error) {
-	if text == "" || len(text) > 2000 {
-		return nil, errors.New("text is empty or invalid comment len")
-	}
 	post, err := u.posts.GetByID(ctx, postID)
 	if err != nil {
 		return nil, err

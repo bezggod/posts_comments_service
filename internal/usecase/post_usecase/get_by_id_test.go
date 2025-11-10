@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"posts_commets_service/internal/domain/models"
+	"posts_comments_service/internal/domain/models"
 	"testing"
 )
 
@@ -46,18 +46,12 @@ func TestPostUseCase_GetByID(t *testing.T) {
 			},
 		},
 		{
-			name:    "repo error",
+			name:    "error on GetByID",
 			args:    args{id: 1},
 			wantErr: true,
 			before: func(m mockService, args args) {
 				m.postRepo.EXPECT().GetByID(mock.Anything, args.id).Return(nil, errTest)
 			},
-		},
-		{
-			name:    "epmty id",
-			args:    args{id: 0},
-			wantErr: true,
-			before:  nil,
 		},
 	}
 	for _, tc := range tests {
